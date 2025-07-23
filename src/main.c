@@ -19,14 +19,19 @@ int main(int argc, char *argv[]) {
   int c;
   bool newfile = false;
   char *filepath = NULL;
+  char *addstring = NULL;
 
   int dbfd = -1;
   struct dbheader_t *dbhdr = NULL;
+  struct employee_t *employees = NULL;
 
-  while ((c = getopt(argc, argv, "nf:")) != -1) {
+  while ((c = getopt(argc, argv, "nf:a:")) != -1) {
     switch (c) {
     case 'n':
       newfile = true;
+      break;
+    case 'a':
+      addstring = optarg;
       break;
     case 'f':
       filepath = optarg;
@@ -71,10 +76,38 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  printf("Newfile: %d\n", newfile);
-  printf("Filepath: %s\n", filepath);
+  if (read_employees(dbfd, dbhdr, &employees) == STATUS_ERROR) {
+    printf("%s\n", "Failed to read employees from database file");
+    close(dbfd);
+    free(dbhdr);
+    return -1;
+  }
 
-  output_file(dbfd, dbhdr, NULL);
+  if (addstring) {
+    dbhdr->count++;
+    if (realloc(employees, dbhdr->count * sizeof(struct employee_t)) == NULL) {
+      printf("%s\n", "Failed to allocate memory for new employee");
+      close(dbfd);
+      free(dbhdr);
+      free(employees);
+      return -1;
+    }
+    if (add_employee(dbhdr, employees, addstring) == STATUS_ERROR) {
+      printf("%s\n", "Failed to add employee");
+      close(dbfd);
+      free(dbhdr);
+      free(employees);
+      return -1;
+    }
+  }
+
+  if (output_file(dbfd, dbhdr, employees) == STATUS_ERROR) {
+    printf("%s\n", "Failed to output database file");
+    close(dbfd);
+    free(dbhdr);
+    free(employees);
+    return -1;
+  }
 
   return 0;
 }
