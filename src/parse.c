@@ -22,7 +22,13 @@ void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
 
 int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
                  char *addstring) {
+  if (dbhdr == NULL) {
+    printf("%s\n", "Invalid db header pointer");
+    return STATUS_ERROR;
+  }
+
   if (employees == NULL) {
+    printf("%s\n", "Invalid employees pointer");
     return STATUS_ERROR;
   } else if (*employees == NULL) {
     *employees = calloc(1, sizeof(struct employee_t));
