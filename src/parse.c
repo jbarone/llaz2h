@@ -23,6 +23,9 @@ void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
 int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees,
                  char *addstring) {
 
+  printf("Adding employee: %s\n", addstring);
+  printf("New count: %d\n", dbhdr->count);
+
   char *name = strtok(addstring, ",");
   char *addr = strtok(NULL, ",");
   char *hours = strtok(NULL, ",");
