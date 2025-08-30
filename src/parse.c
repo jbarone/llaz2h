@@ -20,10 +20,17 @@ void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
   return;
 }
 
-int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees,
+int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
                  char *addstring) {
-  if (realloc(employees, (dbhdr->count + 1) * sizeof(struct employee_t)) ==
-      NULL) {
+  if (employees == NULL) {
+    return STATUS_ERROR;
+  } else if (*employees == NULL) {
+    *employees = calloc(1, sizeof(struct employee_t));
+  } else {
+    *employees =
+        realloc(*employees, (dbhdr->count + 1) * sizeof(struct employee_t));
+  }
+  if (*employees == NULL) {
     printf("%s\n", "Failed to allocate memory for new employee");
     return STATUS_ERROR;
   }
@@ -33,11 +40,11 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees,
   char *addr = strtok(NULL, ",");
   char *hours = strtok(NULL, ",");
 
-  strncpy(employees[dbhdr->count - 1].name, name,
-          sizeof(employees[dbhdr->count - 1].name));
-  strncpy(employees[dbhdr->count - 1].address, addr,
-          sizeof(employees[dbhdr->count - 1].address));
-  employees[dbhdr->count - 1].hours = atoi(hours);
+  strncpy((*employees)[dbhdr->count - 1].name, name,
+          sizeof((*employees)[dbhdr->count - 1].name));
+  strncpy((*employees)[dbhdr->count - 1].address, addr,
+          sizeof((*employees)[dbhdr->count - 1].address));
+  (*employees)[dbhdr->count - 1].hours = atoi(hours);
 
   return STATUS_SUCCESS;
 }

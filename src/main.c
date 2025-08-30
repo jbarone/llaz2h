@@ -90,16 +90,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (addstring) {
-    // dbhdr->count++;
-    // if (realloc(employees, dbhdr->count * sizeof(struct employee_t)) == NULL)
-    // {
-    //   printf("%s\n", "Failed to allocate memory for new employee");
-    //   close(dbfd);
-    //   free(dbhdr);
-    //   free(employees);
-    //   return -1;
-    // }
-    if (add_employee(dbhdr, employees, addstring) == STATUS_ERROR) {
+    if (add_employee(dbhdr, &employees, addstring) == STATUS_ERROR) {
       printf("%s\n", "Failed to add employee");
       close(dbfd);
       free(dbhdr);
