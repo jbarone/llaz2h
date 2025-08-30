@@ -27,6 +27,11 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
     return STATUS_ERROR;
   }
 
+  if (addstring == NULL) {
+    printf("%s\n", "Invalid addstring pointer");
+    return STATUS_ERROR;
+  }
+
   if (employees == NULL) {
     printf("%s\n", "Invalid employees pointer");
     return STATUS_ERROR;
