@@ -28,6 +28,9 @@
   {
     "arguments": [
       "/usr/bin/gcc",
+      "-Wall",
+      "-Wsign-compare",
+      "-Wunused-parameters",
       "-c",
       "-Iinclude",
       "-o",

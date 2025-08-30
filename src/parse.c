@@ -50,8 +50,8 @@ int read_employees(int fd, struct dbheader_t *dbhdr,
     return STATUS_ERROR;
   }
 
-  if (read(fd, employees, count * sizeof(struct employee_t)) !=
-      count * sizeof(struct employee_t)) {
+  if (read(fd, employees, (unsigned int)(count * sizeof(struct employee_t))) !=
+      (unsigned int)(count * sizeof(struct employee_t))) {
     perror("read");
     free(employees);
     return STATUS_ERROR;
@@ -155,7 +155,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
   return STATUS_SUCCESS;
 }
 
-int create_db_header(int fd, struct dbheader_t **headerOut) {
+int create_db_header(struct dbheader_t **headerOut) {
   struct dbheader_t *header = calloc(1, sizeof(struct dbheader_t));
   if (header == NULL) {
     printf("%s\n", "Failed to allocate memory for db header");
