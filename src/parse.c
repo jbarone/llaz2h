@@ -32,11 +32,11 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
     return STATUS_ERROR;
   }
 
-  if (employees == NULL) {
+  if (employees == NULL || *employees == NULL) {
     printf("%s\n", "Invalid employees pointer");
     return STATUS_ERROR;
-  } else if (*employees == NULL) {
-    *employees = calloc(1, sizeof(struct employee_t));
+    // } else if (*employees == NULL) {
+    //   *employees = calloc(1, sizeof(struct employee_t));
   } else {
     *employees =
         realloc(*employees, (dbhdr->count + 1) * sizeof(struct employee_t));
