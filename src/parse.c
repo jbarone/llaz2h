@@ -35,7 +35,22 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
   if (employees == NULL) {
     printf("%s\n", "Invalid employees pointer");
     return STATUS_ERROR;
-  } else if (*employees == NULL) {
+  }
+
+  char *input = addstring;
+  char *position1 = strchr(input, ',');
+  if (position1 == NULL) {
+    printf("%s\n", "Invalid addstring format");
+    return STATUS_ERROR;
+  }
+  input = position1 + 1;
+  char *position2 = strchr(input, ',');
+  if (position2 == NULL) {
+    printf("%s\n", "Invalid addstring format");
+    return STATUS_ERROR;
+  }
+
+  if (*employees == NULL) {
     *employees = calloc(1, sizeof(struct employee_t));
   } else {
     *employees =
@@ -52,21 +67,19 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
     return STATUS_ERROR;
   }
 
-  char *input = addstring;
-  char *position = strchr(input, ',');
+  input = addstring;
   if (!memcpy((*employees)[dbhdr->count - 1].name, input,
-              (size_t)(position - input))) {
+              (size_t)(position1 - input))) {
     printf("%s\n", "Failed to copy name");
     return STATUS_ERROR;
   }
-  input = position + 1;
-  position = strchr(input, ',');
+  input = position1 + 1;
   if (!memcpy((*employees)[dbhdr->count - 1].address, input,
-              (size_t)(position - input))) {
+              (size_t)(position2 - input))) {
     printf("%s\n", "Failed to copy address");
     return STATUS_ERROR;
   }
-  input = position + 1;
+  input = position2 + 1;
   (*employees)[dbhdr->count - 1].hours = atoi(input);
 
   return STATUS_SUCCESS;

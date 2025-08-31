@@ -2,3 +2,4 @@ bin/
 obj/
 .cache/
 mynewdb.db
+test/test.o
