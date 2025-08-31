@@ -2,6 +2,7 @@
   {
     "arguments": [
       "/usr/bin/gcc",
+      "-Wall",
       "-c",
       "-Iinclude",
       "-o",
@@ -15,6 +16,7 @@
   {
     "arguments": [
       "/usr/bin/gcc",
+      "-Wall",
       "-c",
       "-Iinclude",
       "-o",

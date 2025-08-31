@@ -14,9 +14,12 @@ clean:
 	rm -f *.db
 
 $(TARGET): $(OBJ)
-	gcc -o $@ $?
+	gcc -Wall -o $@ $?
 
 obj/%.o : src/%.c
-	gcc -c $< -o $@ -Iinclude
+	gcc -Wall -c $< -o $@ -Iinclude -g
 
-
+test: obj/parse.o
+	gcc -Wall -c test/test.c -o test/test.o -Iinclude -g
+	gcc -Wall -o bin/test -ggdb -g obj/parse.o test/test.o -Iinclude
+	bin/test
