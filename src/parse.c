@@ -32,12 +32,14 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
     return STATUS_ERROR;
   }
 
-  if (employees == NULL || *employees == NULL) {
+  if (employees == NULL) {
     printf("%s\n", "Invalid employees pointer");
     return STATUS_ERROR;
-    // } else if (*employees == NULL) {
-    //   *employees = calloc(1, sizeof(struct employee_t));
+  } else if (*employees == NULL) {
+    printf("%s\n", "Creating new employees array");
+    *employees = calloc(1, sizeof(struct employee_t));
   } else {
+    printf("%s\n", "Reallocating employees array");
     *employees =
         realloc(*employees, (dbhdr->count + 1) * sizeof(struct employee_t));
   }
@@ -47,15 +49,27 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees,
   }
   dbhdr->count++;
 
-  char *name = strtok(addstring, ",");
-  char *addr = strtok(NULL, ",");
-  char *hours = strtok(NULL, ",");
+  if (!memset(&(*employees)[dbhdr->count - 1], 0, sizeof(struct employee_t))) {
+    printf("%s\n", "Failed to clear new employee memory");
+    return STATUS_ERROR;
+  }
 
-  strncpy((*employees)[dbhdr->count - 1].name, name,
-          sizeof((*employees)[dbhdr->count - 1].name));
-  strncpy((*employees)[dbhdr->count - 1].address, addr,
-          sizeof((*employees)[dbhdr->count - 1].address));
-  (*employees)[dbhdr->count - 1].hours = atoi(hours);
+  char *input = addstring;
+  char *position = strchr(input, ',');
+  if (!memcpy((*employees)[dbhdr->count - 1].name, input,
+              (size_t)(position - input))) {
+    printf("%s\n", "Failed to copy name");
+    return STATUS_ERROR;
+  }
+  input = position + 1;
+  position = strchr(input, ',');
+  if (!memcpy((*employees)[dbhdr->count - 1].address, input,
+              (size_t)(position - input))) {
+    printf("%s\n", "Failed to copy address");
+    return STATUS_ERROR;
+  }
+  input = position + 1;
+  (*employees)[dbhdr->count - 1].hours = atoi(input);
 
   return STATUS_SUCCESS;
 }
