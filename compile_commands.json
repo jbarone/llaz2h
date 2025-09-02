@@ -5,13 +5,14 @@
       "-Wall",
       "-c",
       "-Iinclude",
+      "-g",
       "-o",
       "obj/file.o",
       "src/file.c"
     ],
-    "directory": "/home/joshua/code/lowlevel",
-    "file": "/home/joshua/code/lowlevel/src/file.c",
-    "output": "/home/joshua/code/lowlevel/obj/file.o"
+    "directory": "/home/joshua/Developer/lowlevel",
+    "file": "/home/joshua/Developer/lowlevel/src/file.c",
+    "output": "/home/joshua/Developer/lowlevel/obj/file.o"
   },
   {
     "arguments": [
@@ -19,28 +20,28 @@
       "-Wall",
       "-c",
       "-Iinclude",
+      "-g",
       "-o",
       "obj/main.o",
       "src/main.c"
     ],
-    "directory": "/home/joshua/code/lowlevel",
-    "file": "/home/joshua/code/lowlevel/src/main.c",
-    "output": "/home/joshua/code/lowlevel/obj/main.o"
+    "directory": "/home/joshua/Developer/lowlevel",
+    "file": "/home/joshua/Developer/lowlevel/src/main.c",
+    "output": "/home/joshua/Developer/lowlevel/obj/main.o"
   },
   {
     "arguments": [
       "/usr/bin/gcc",
       "-Wall",
-      "-Wsign-compare",
-      "-Wunused-parameters",
       "-c",
       "-Iinclude",
+      "-g",
       "-o",
       "obj/parse.o",
       "src/parse.c"
     ],
-    "directory": "/home/joshua/code/lowlevel",
-    "file": "/home/joshua/code/lowlevel/src/parse.c",
-    "output": "/home/joshua/code/lowlevel/obj/parse.o"
+    "directory": "/home/joshua/Developer/lowlevel",
+    "file": "/home/joshua/Developer/lowlevel/src/parse.c",
+    "output": "/home/joshua/Developer/lowlevel/obj/parse.o"
   }
 ]

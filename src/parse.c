@@ -10,6 +10,14 @@
 #include "parse.h"
 
 void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
+  if (dbhdr == NULL) {
+    printf("%s\n", "Invalid db header pointer");
+    return;
+  }
+  if (employees == NULL && dbhdr->count > 0) {
+    printf("%s\n", "No employees to list");
+    return;
+  }
   int i = 0;
   for (; i < dbhdr->count; i++) {
     printf("Employee %d:\n", i);
